@@ -35,6 +35,7 @@ class U2netCustomSession(BaseSession):
             ValueError: If model_path is None.
         """
         model_path = kwargs.get("model_path")
+        self.im_size = kwargs.get("im_size")
         if model_path is None:
             raise ValueError("model_path is required")
 
@@ -55,7 +56,7 @@ class U2netCustomSession(BaseSession):
         ort_outs = self.inner_session.run(
             None,
             self.normalize(
-                img, (0.485, 0.456, 0.406), (0.229, 0.224, 0.225), (320, 320)
+                img, (0.485, 0.456, 0.406), (0.229, 0.224, 0.225), (self.im_size, self.im_size)
             ),
         )
 
